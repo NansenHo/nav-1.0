@@ -1,0 +1,69 @@
+/* CSS reset */
+*{box-sizing: border-box;}
+*:before, *:after{box-sizing: border-box;}
+*{margin: 0; padding: 0;}
+ul,ol{ list-style: none; }
+
+/* style */
+body{background: #eee;}
+.globalHeader{
+    margin: 20px; /* 左右间距相等，就居中了一个 div */
+    display: flex;
+    justify-content: space-between;
+}
+.globalHeader > input{
+    width: 100%;
+    margin-right: 10px; /* 搜索框和搜索按钮之间的空隙 */
+    height: 40px; /* 根据视觉稿来设定的 */
+    padding: 0 10px; /* 让输入变得更协调*/
+    border: 1px solid #ddd; /* input 是有默认 border 的，我们要覆盖了它的默认样式，或者 none 掉默认样式，才能在其 border 上加别的东西 */
+    border-radius: 4px;
+}
+.globalHeader > button{
+    white-space: nowrap; /* 强制搜索框为一行 */
+    padding: 0 20px;
+    border: none; /* none 掉默认 border */
+    border-radius: 4px;
+    background: #0282B9;
+    color: white;
+    font-size: 16px;
+}
+
+.globalMain{}
+
+.siteList{
+    display: flex;
+    flex-wrap: wrap; /* items 一行装不下了，就换行 */
+    margin: 20px; /* 一般来说，不会讲上下 margin 设为 0  */
+    justify-content: space-between;
+}
+.siteList > li {
+}
+.siteList .site{
+    width: 160px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 上下居中 */
+    flex-direction: column; /* 让里面的 items 上下排列。让flex容器的主轴和块轴相同了。 */
+    background: white;
+    margin-bottom: 10px; /* 两个网站之间的上下间隙，不用 margin-top 用 margin-bottom 更自然好看 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px 0;
+}
+.siteList .site > .logo{
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 上下居中 */
+    font-size: 64px;
+}
+.siteList .site > .link{
+    font-size: 14px;
+    margin-top: 2px;
+}
+.siteList .addButton{
+    width: 160px;
+}
+
