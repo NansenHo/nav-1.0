@@ -57,12 +57,14 @@ body{background: #eee;}
     flex-wrap: wrap; /* items 一行装不下了，就换行 */
     margin: 20px; /* 一般来说，不会讲上下 margin 设为 0  */
     /* justify-content: space-between; */
+    justify-content: space-between;
 }
 @media(min-width:500px){
     .siteList{
         margin-left: 0;
         margin-right: -25px;
-    }
+        justify-content: flex-start; /* 在 PC 里就用默认的，不用 space-between */
+    } 
 }
 .siteList > li {
     margin-bottom: 10px;

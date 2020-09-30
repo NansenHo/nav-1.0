@@ -1,5 +1,4 @@
 const $siteList = $('.siteList')
-console.log('fuck')
 // 找到 siteList ，用 jQuery 找的
 const $lastLi = $siteList.find('li.last') 
 const x = localStorage.getItem('x') // 读已经存了的 x
@@ -114,3 +113,10 @@ window.onbeforeunload = ()=>{
     window.localStorage.setItem('x', string) // window 可以省略，我这里先不省略。接受两个值，一个是 key ，一个是 value
     // 上行代码的意思就是，在本地设置一个 x ，它的值就是 string
 }
+// 键盘导航
+// document.addEventListener{
+// }
+// 或者我们也可以用 jQuery 包装以下
+$(document).on('keypress', (e)=>{ // keypress 用户按下键盘
+    console.log(e)
+})
