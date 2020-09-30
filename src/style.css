@@ -12,9 +12,21 @@ body{background: #eee;}
 .globalHeader{
     margin: 20px; /* 左右间距相等，就居中了一个 div */
 }
+@media(min-width: 500px){
+    .globalHeader{
+        margin: 150px 0 60px 0;
+    }
+}
 .searchForm{
     display: flex;
     justify-content: space-between;
+}
+@media (min-width:500px) { /* 即 500px 宽度以下我不管 */
+    .searchForm{
+        max-width: 550px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 .searchForm > input{
     width: 100%;
@@ -34,15 +46,31 @@ body{background: #eee;}
     font-size: 16px;
 }
 
-.globalMain{}
+.globalMain{
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .siteList{
     display: flex;
     flex-wrap: wrap; /* items 一行装不下了，就换行 */
     margin: 20px; /* 一般来说，不会讲上下 margin 设为 0  */
-    justify-content: space-between;
+    /* justify-content: space-between; */
+}
+@media(min-width:500px){
+    .siteList{
+        margin-left: 0;
+        margin-right: -25px;
+    }
 }
 .siteList > li {
+    margin-bottom: 10px;
+}
+@media(min-width:500px){
+    .siteList > li {
+        margin-right: 25px;
+    }
 }
 .siteList .site{
     width: 160px;
@@ -51,10 +79,12 @@ body{background: #eee;}
     align-items: center; /* 上下居中 */
     flex-direction: column; /* 让里面的 items 上下排列。让flex容器的主轴和块轴相同了。 */
     background: white;
-    margin-bottom: 10px; /* 两个网站之间的上下间隙，不用 margin-top 用 margin-bottom 更自然好看 */
+    /*margin-bottom: 10px; /* 两个网站之间的上下间隙，不用 margin-top 用 margin-bottom 更自然好看 */
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 20px 0;
+    position: relative;
+    cursor: pointer; /* 鼠标浮上 .site ，会变成手型 */
 }
 .siteList .site > .logo{
     width: 64px;
@@ -63,10 +93,21 @@ body{background: #eee;}
     justify-content: center; /* 水平居中 */
     align-items: center; /* 上下居中 */
     font-size: 64px;
+    text-transform: uppercase; /* 将 logo 转成大写 */
 }
 .siteList .site > .link{
     font-size: 14px;
     margin-top: 2px;
+}
+.siteList .site > .close{
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    display: none;
+    cursor: default;
+}
+.siteList .site:hover > .close{ /* 鼠标浮上 .site 其子元素 .close 出现*/
+    display: block;
 }
 .siteList .addButton{
     border: 1px solid #ddd;

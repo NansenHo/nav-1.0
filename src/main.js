@@ -1,4 +1,6 @@
-const $siteList = $('.siteList') // 找到 siteList ，用 jQuery 找的
+const $siteList = $('.siteList')
+console.log('fuck')
+// 找到 siteList ，用 jQuery 找的
 const $lastLi = $siteList.find('li.last') 
 const x = localStorage.getItem('x') // 读已经存了的 x
 // 但 x 目前还是字符串，还要将它变成对象
@@ -8,27 +10,42 @@ const xObject = JSON.parse(x) // 将字符串变成对象
 // console.log('xObject')
 // console.log(xObject)
 const hashMap = xObject || [
-    {logo: 'Z', logoType: 'text', url: 'https://zhihu.com'},
-    {logo: '../images/bilibili-logo.png', logoType: 'image', url: 'https://www.bilibili.com'},
+    {logo: 'Z', url: 'https://zhihu.com'},
+    {logo: 'B', url: 'https://www.bilibili.com'},
 ]
-const simplifyUrl = (url)=>{
+const simplifyUrl = (url) => {
     return url.replace('https://', '')
-    .replace('http://', '')
-    .replace('www.', '')
-    .replace(/\/.*/, '')// 把以 / 开头的也删掉，需要用到正则表达式
-} // 接受一个 https:// 开头的 url ，则返回没有 https:// 开头的 url。原本的 url 并没有变，这里是产生了一个新的字符串
+      .replace('http://', '')
+      .replace('www.', '')
+      .replace(/\/.*/, '') // 删除 / 开头的内容
+  } // 接受一个 https:// 开头的 url ，则返回没有 https:// 开头的 url。原本的 url 并没有变，这里是产生了一个新的字符串
 const render = ()=>{ // 优化代码，render 函数就是渲染哈希的
     // 在重新渲染之前要把之前的给删了
     $siteList.find('li:not(.last)').remove() // 把所有 li 都找到，唯独不找最后那一个 li ，然后删掉
     // 现在删这个弄这么复杂，是因为我们 HTML 就没有设计好。但如果放外面 CSS 也会很难写
-    hashMap.forEach(node=>{
+    hashMap.forEach((node, index)=>{ // 给个索引，方便做 remove 功能
+        // console.log(index)
         const $li = $( `<li>
-        <a href="${node.url}"> 
-                        <div class="site">
-                            <div class="logo">${node.logo[0]}</div>
-                            <div class="link">${simplifyUrl(node.url)}</div>
+                    <div class="site">
+                        <div class="logo">${node.logo}</div>
+                        <div class="link">${simplifyUrl(node.url)}</div>
+                        <div class="close"> 
+                            <svg class="icon">
+                            <use xlink:href="#icon-baseline-close-px"></use>
+                            </svg>
                         </div>
-                    </a></li>`).insertBefore($lastLi)
+                    </div>
+                </li>`).insertBefore($lastLi)
+                $li.on('click', ()=>{
+                    window.open(node.url)
+                })
+                $li.on('click', '.close', (e)=>{ // 得到一个事件
+                    console.log('这里')
+                    e.stopPropagation()
+                    console.log(hashMap)
+                    hashMap.splice(index, 1) // 从 index 这里，删掉一个
+                    render() // 删除了之后还要重新渲染 hashMap
+                }) // 当你点击我 li 里面的 class="close" 时，阻止冒泡
     }) // 遍历 hashMap，forEach 会把每一项作为参数告诉你。   
 }
 render()
@@ -77,15 +94,17 @@ $('.addButton') // 获取 .addButton
         // `).insertBefore($lastLi)
         // 当点击的时候，不再创建 li 了，而是直接操作哈希表，然后让问题变成一个简单的只有渲染哈希表的一个事。
         hashMap.push({
-            logo: url[0], 
+            logo: simplifyUrl(url)[0].toUpperCase(), 
+            // 把 url 简化，
+            // toUpperCase 将字母改成大写，或者也可以用 CSS 来控制。
             logoType:'text', 
             url: url}
         )
         render()
     })
 
-window.onbeforeunload = ()=>{
-    console.log('页面要关闭了')
+window.onbeforeunload = ()=>{ 
+    // console.log('页面要关闭了')
     // 因为 localStorage 只能存字符串，所以要把哈希表变成字符串
     const string = JSON.stringify(hashMap) // JSON.stringify 可以把一个对象变成字符串
     // console.log(typeof hashMap)
