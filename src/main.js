@@ -118,5 +118,10 @@ window.onbeforeunload = ()=>{
 // }
 // 或者我们也可以用 jQuery 包装以下
 $(document).on('keypress', (e)=>{ // keypress 用户按下键盘
-    console.log(e)
+    // const key = e.key 当你的变量名和属性名同名时，可以简写为下一行
+    const {key} = e 
+    for(let i=0; i<hashMap.length; i++){ // hashMap 是个数组，遍历这个数组
+        if(hashMap[i].logo.toLowerCase() === key) // logo 要转化成小写
+        window.open(hashMap[i].url) // 那就打开 hashMap 的第 i 个的 url
+    }
 })
